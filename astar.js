@@ -1,5 +1,7 @@
-var cols = 25;
-var rows = 25;
+import Spot from "./spot.js"
+
+var cols = 10;
+var rows = 10;
 var grid = new Array(cols);
 var w, h;
 
@@ -8,6 +10,8 @@ var closedSet = [];
 var start;
 var end;
 var path = []
+
+setup();
 
 function heuristic(spotA, spotB) {
   // var d = dist(a.i, a.j, b.i, b.j);
@@ -23,45 +27,12 @@ function removeFromArray(arr, elt) {
   }
 }
 
-function Spot(i,j) {
-  this.i = i;
-  this.j = j;
-  this.f = 0;
-  this.g = 0;
-  this.h = 0;
-  this.neighbors = [];
-  this.previous;
-
-  this.addNeighbors = function(grid) {
-    if (i < cols - 1) {
-      this.neighbors.push(grid[i+1][j]);
-    }
-    if (i > 0) {
-      this.neighbors.push(grid[i-1][j]);
-    }
-    if (j < rows - 1) {
-      this.neighbors.push(grid[i][j+1]);
-    }
-    if (j > 0) {
-    this.neighbors.push(grid[i][j-1]);
-    }
-  }
-
-
-  this.show = function(color) {
-    fill(color);
-    noStroke();
-    rect(this.i * w,this.j * h, w-1, h-1);
-  }
-}
-
 // P5 har alltid en setup(main) fil
 function setup() {
-  createCanvas(400, 400);
   console.log('A*');
 
-  w = width/cols;
-  h = height/rows;
+  // w = width/cols;
+  // h = height/rows;
 
   // Making a multidimensional array
   for (var i = 0; i < cols; i++) {
@@ -72,6 +43,7 @@ function setup() {
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       grid[i][j] = new Spot(i,j);
+      grid[i][j].draw();
     }
   }
   
