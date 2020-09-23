@@ -10,16 +10,16 @@ export default class Spot {
 
   addNeighbors(grid, cols, rows) {
     if (this.x < cols - 1) {
-      this.neighbors.push(grid[this.x+1][this.y]);
+      this.neighbors.push(grid[this.x+1][this.y])
     }
     if (this.x > 0) {
-      this.neighbors.push(grid[this.x-1][this.y]);
+      this.neighbors.push(grid[this.x-1][this.y])
     }
     if (this.y < rows - 1) {
-      this.neighbors.push(grid[this.x][this.y+1]);
+      this.neighbors.push(grid[this.x][this.y+1])
     }
     if (this.y > 0) {
-    this.neighbors.push(grid[this.x][this.y-1]);
+    this.neighbors.push(grid[this.x][this.y-1])
     }
   }
   
@@ -32,6 +32,6 @@ export default class Spot {
 
   color(color) {
     const cell = document.getElementById(`cell-${this.x}-${this.y}`)
-    cell.style.backgroundColor = color;
+    cell.style.backgroundColor = color
   }
 }
