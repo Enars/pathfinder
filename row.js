@@ -1,14 +1,11 @@
 export default class Row {
-  constructor(x)
+  constructor(x) {
+    this.x = x
+    }
   draw() {
-    const div = document.createElement('div')
-    div.setAttribute('id', `${this.x}-${this.y}`)
-    div.setAttribute('class', 'cell')
-    document.getElementById('board').appendChild(div)
-  }
-
-  color(color) {
-    const cell = document.getElementById(`${x}-${y}`)
-    //todo
+    const el = document.createElement('div')
+    el.setAttribute('id', `row-${this.x}`)
+    el.setAttribute('class', 'row')
+    document.getElementById('board').appendChild(el)
   }
 }

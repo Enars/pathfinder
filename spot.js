@@ -8,30 +8,30 @@ export default class Spot {
     this.neighbors = []
   }
 
-  addNeighbors(grid) {
-    if (i < cols - 1) {
-      this.neighbors.push(grid[i+1][j]);
+  addNeighbors(grid, cols, rows) {
+    if (this.x < cols - 1) {
+      this.neighbors.push(grid[this.x+1][this.y]);
     }
-    if (i > 0) {
-      this.neighbors.push(grid[i-1][j]);
+    if (this.x > 0) {
+      this.neighbors.push(grid[this.x-1][this.y]);
     }
-    if (j < rows - 1) {
-      this.neighbors.push(grid[i][j+1]);
+    if (this.y < rows - 1) {
+      this.neighbors.push(grid[this.x][this.y+1]);
     }
-    if (j > 0) {
-    this.neighbors.push(grid[i][j-1]);
+    if (this.y > 0) {
+    this.neighbors.push(grid[this.x][this.y-1]);
     }
   }
   
   draw() {
-    const div = document.createElement('span')
-    div.setAttribute('id', `${this.x}-${this.y}`)
-    div.setAttribute('class', 'cell')
-    document.getElementById('board').appendChild(div)
+    const el = document.createElement('div')
+    el.setAttribute('id', `cell-${this.x}-${this.y}`)
+    el.setAttribute('class', 'cell')
+    document.getElementById(`row-${this.x}`).appendChild(el)
   }
 
   color(color) {
-    const cell = document.getElementById(`${x}-${y}`)
-    //todo
+    const cell = document.getElementById(`cell-${this.x}-${this.y}`)
+    cell.style.backgroundColor = color;
   }
 }
