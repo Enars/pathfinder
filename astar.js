@@ -1,26 +1,63 @@
 import Spot from "./spot.js"
 import Row from "./row.js"
 
-const cols = 10;
-const rows = 10;
-const wait = 1
-const grid = new Array(cols);
+const cols = 10
+const rows = 10
+const grid = new Array(cols)
 
-let openSet = [];
-let closedSet = [];
-let start;
-let end;
+let openSet = []
+let closedSet = []
+let start
+let end
 let path = []
 
-setup();
-while(openSet.length > 0) {
-  draw()
+let requestId
+var stop = false
+var frameCount = 0
+var fps, fpsInterval, startTime, now, then, elapsed
+
+
+// initialize the timer variables and start the animation
+startAnimating(15)
+
+
+function startAnimating(fps) {
+  setup()
+
+  fpsInterval = 1000 / fps;
+  then = Date.now();
+  startTime = then;
+  loop()
 }
+
+function loop() {
+
+    // calc elapsed time since last loop
+    requestId = requestAnimationFrame(loop)
+    console.log(frameCount++)
+    now = Date.now();
+    elapsed = now - then;
+
+    // if enough time has elapsed, draw the next frame
+
+    if (elapsed > fpsInterval) {
+
+        // Get ready for next frame by setting then=now, but also adjust for your
+        // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
+        then = now - (elapsed % fpsInterval);
+
+        // Put your drawing code here
+        if (openSet.length > 0)
+          draw()
+        else
+            window.cancelAnimationFrame(requestId);
+    }
+}
+
 function heuristic(spotA, spotB) {
-  // var d = dist(a.i, a.j, b.i, b.j);
   const d = Math.abs(spotA.i - spotB.i) + Math.abs(spotA.j - spotB.j)
   return d
-}
+} 
 
 function removeFromArray(arr, elt) {
   for (var i = arr.length - 1; i >=0; i--) {
@@ -30,12 +67,9 @@ function removeFromArray(arr, elt) {
   }
 }
 
-// P5 har alltid en setup(main) fil
+// Setup grid, instantiate cells, count neighbors, set start and end, put start in openSet
 function setup() {
   console.log('A*')
-
-  // w = width/cols;
-  // h = height/rows;
 
   // Making a multidimensional array
   for (var x = 0; x < cols; x++) {
@@ -63,10 +97,9 @@ function setup() {
   openSet.push(start);
 }
 
-//P5 har alltid en draw fil som ritar
+// Draw and work algorithm
 function draw() {
-  //if (openSet.length > 0) {
-
+  // Work
     var winner = 0
     for (var i = 0; i < openSet.length; i++) {
       if (openSet[i].f < openSet[winner].f) {
@@ -75,12 +108,7 @@ function draw() {
     }
     var current = openSet[winner]
 
-    if (current === end) {
-    
-    }
-
     removeFromArray(openSet,current);
-    //ta bort current från openSet
     closedSet.push(current)
 
     var neighbors = current.neighbors
@@ -105,10 +133,9 @@ function draw() {
       }
     }
 
-
-    //keep going
     //todo: no solution
 
+  // Draw
   for (var i = 0; i < cols; i++) {
     for (var j = 0; j < rows; j++) {
       grid[i][j].color('white')
