@@ -1,8 +1,8 @@
 import Spot from "./spot.js"
 import Row from "./row.js"
 
-const cols = 10
-const rows = 10
+const cols = 15
+const rows = 25
 const grid = new Array(cols)
 
 let openSet = []
@@ -14,19 +14,20 @@ let path = []
 let requestId
 var stop = false
 var frameCount = 0
-var fps, fpsInterval, startTime, now, then, elapsed
+const fps = 60
+let startTime, now, then, elapsed, fpsInterval
 
 
 // initialize the timer variables and start the animation
-startAnimating(15)
+startAnimating()
 
 
-function startAnimating(fps) {
+function startAnimating() {
   setup()
 
-  fpsInterval = 1000 / fps;
-  then = Date.now();
-  startTime = then;
+  fpsInterval = 1000 / fps
+  then = Date.now()
+  startTime = then
   loop()
 }
 
@@ -35,8 +36,8 @@ function loop() {
     // calc elapsed time since last loop
     requestId = requestAnimationFrame(loop)
     console.log(frameCount++)
-    now = Date.now();
-    elapsed = now - then;
+    now = Date.now()
+    elapsed = now - then
 
     // if enough time has elapsed, draw the next frame
 
@@ -46,7 +47,7 @@ function loop() {
         // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
         then = now - (elapsed % fpsInterval);
 
-        // Put your drawing code here
+        // Run draw and stop when finished
         if (openSet.length > 0)
           draw()
         else
@@ -78,16 +79,16 @@ function setup() {
   }
 
 
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      grid[i][j] = new Spot(i,j);
-      grid[i][j].draw()
+  for (var x = 0; x < cols; x++) {
+    for (var y = 0; y < rows; y++) {
+      grid[x][y] = new Spot(x,y);
+      grid[x][y].draw()
     }
   }
   
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
-      grid[i][j].addNeighbors(grid, cols, rows)
+  for (var x = 0; x < cols; x++) {
+    for (var y = 0; y < rows; y++) {
+      grid[x][y].addNeighbors(grid, cols, rows)
     }
   }
 
