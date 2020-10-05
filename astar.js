@@ -2,8 +2,9 @@ import Spot from "./spot.js"
 import Row from "./row.js"
 
 const cols = 15
-const rows = 25
+const rows = 15
 const grid = new Array(cols)
+const diagonals = true
 
 let openSet = []
 let closedSet = []
@@ -14,7 +15,7 @@ let path = []
 let requestId
 var stop = false
 var frameCount = 0
-const fps = 60
+const fps = 30
 let startTime, now, then, elapsed, fpsInterval
 
 
@@ -88,7 +89,7 @@ function setup() {
   
   for (var x = 0; x < cols; x++) {
     for (var y = 0; y < rows; y++) {
-      grid[x][y].addNeighbors(grid, cols, rows)
+      grid[x][y].addNeighbors(grid, cols, rows, diagonals)
     }
   }
 

@@ -8,7 +8,7 @@ export default class Spot {
     this.neighbors = []
   }
 
-  addNeighbors(grid, cols, rows) {
+  addNeighbors(grid, cols, rows, diagonals) {
     if (this.x < cols - 1) {
       this.neighbors.push(grid[this.x+1][this.y])
     }
@@ -20,6 +20,20 @@ export default class Spot {
     }
     if (this.y > 0) {
     this.neighbors.push(grid[this.x][this.y-1])
+    }
+    if (diagonals) {
+      if (this.x < cols - 1 && this.y < rows - 1) {
+        this.neighbors.push(grid[this.x + 1][this.y + 1])
+      }
+      // if (this.x < cols - 1 && this.y > 0) {
+      //   this.neighbors.push(grid[this.x + 1][this.y - 1])
+      // }
+      // if (this.y < rows - 1) {
+      //   this.neighbors.push(grid[this.x][this.y+1])
+      // }
+      // if (this.y > 0) {
+      // this.neighbors.push(grid[this.x][this.y-1])
+      // }
     }
   }
   
