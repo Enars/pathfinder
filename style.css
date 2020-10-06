@@ -1,6 +1,6 @@
 :root {
-  --black-single-border: solid 1px black;
-  --gray-single-border: solid 1px gray;
+  --cell-border: solid 1px black;
+  --cell-length: 20px;
 }
   
 main {
@@ -28,22 +28,22 @@ main {
 }
 
   .row {
-    border-top: var(--black-single-border);
+    border-top: var(--cell-border);
     display: flex;
     width: 100%;
     flex-direction: row;  
   }
     .row:last-child {
-      border-bottom: var(--black-single-border);
+      border-bottom: var(--cell-border);
     }
 
   .cell {
-    border-left: var(--black-single-border);
-    width: 20px;
-    height: 20px;
+    border-left: var(--cell-border);
+    width: var(--cell-length);
+    height: var(--cell-length);
   }
     .cell:last-child {
-      border-right: var(--black-single-border);
+      border-right: var(--cell-border);
     }
 
 #action-bar {

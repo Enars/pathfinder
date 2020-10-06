@@ -4,7 +4,7 @@ import Row from "./row.js"
 const cols = 15
 const rows = 15
 const grid = new Array(cols)
-const diagonals = true
+const diagonals = false
 
 let openSet = []
 let closedSet = []
@@ -20,10 +20,8 @@ let startTime, now, then, elapsed, fpsInterval
 
 
 // initialize the timer variables and start the animation
-startAnimating()
 
-
-function startAnimating() {
+export function startAnimating() {
   setup()
 
   fpsInterval = 1000 / fps
@@ -36,7 +34,7 @@ function loop() {
 
     // calc elapsed time since last loop
     requestId = requestAnimationFrame(loop)
-    console.log(frameCount++)
+    //console.log(frameCount++)
     now = Date.now()
     elapsed = now - then
 

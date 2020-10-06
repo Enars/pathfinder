@@ -25,6 +25,16 @@ export default class Spot {
       if (this.x < cols - 1 && this.y < rows - 1) {
         this.neighbors.push(grid[this.x + 1][this.y + 1])
       }
+      if (this.x > 0 && this.y < rows - 1) {
+        this.neighbors.push(grid[this.x - 1][this.y + 1])
+      }
+      if (this.x < cols - 1 && this.y > 0)
+        this.neighbors.push(grid[this.x + 1][this.y - 1])
+
+      if (this.x > 0 && this.y > 0) {
+        this.neighbors.push(grid[this.x - 1][this.y - 1])
+      }
+
       // if (this.x < cols - 1 && this.y > 0) {
       //   this.neighbors.push(grid[this.x + 1][this.y - 1])
       // }
