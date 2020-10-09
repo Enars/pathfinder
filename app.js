@@ -1,6 +1,9 @@
-import {initView} from './view.js'
-import {startAnimating} from './astar.js'
+import { startAnimating, setup } from "./astar.js"
 
-
-initView()
-startAnimating()
+window.onload = () => {
+  setup()
+  const start = document.getElementById('start')
+  start.addEventListener('click', () => {
+    startAnimating()  
+  })
+}

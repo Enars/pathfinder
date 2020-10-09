@@ -4,7 +4,7 @@ import Row from "./row.js"
 const cols = 15
 const rows = 15
 const grid = new Array(cols)
-const diagonals = false
+const diagonals = true
 
 let openSet = []
 let closedSet = []
@@ -13,17 +13,15 @@ let end
 let path = []
 
 let requestId
-var stop = false
-var frameCount = 0
-const fps = 30
+let stop = false
+let frameCount = 0
+const fps = 5
 let startTime, now, then, elapsed, fpsInterval
 
 
 // initialize the timer variables and start the animation
 
 export function startAnimating() {
-  setup()
-
   fpsInterval = 1000 / fps
   then = Date.now()
   startTime = then
@@ -46,8 +44,8 @@ function loop() {
         // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
         then = now - (elapsed % fpsInterval);
 
-        // Run draw and stop when finished
-        if (openSet.length > 0)
+        // Draw the next iteration and stop when finished
+        if (openSet.length > 0 && !stop)
           draw()
         else
             window.cancelAnimationFrame(requestId);
@@ -55,7 +53,7 @@ function loop() {
 }
 
 function heuristic(spotA, spotB) {
-  const d = Math.abs(spotA.i - spotB.i) + Math.abs(spotA.j - spotB.j)
+  const d = Math.abs(spotA.x - spotB.x) + Math.abs(spotA.y - spotB.y)
   return d
 } 
 
@@ -68,7 +66,7 @@ function removeFromArray(arr, elt) {
 }
 
 // Setup grid, instantiate cells, count neighbors, set start and end, put start in openSet
-function setup() {
+export function setup() {
   console.log('A*')
 
   // Making a multidimensional array
@@ -100,6 +98,7 @@ function setup() {
 // Draw and work algorithm
 function draw() {
   // Work
+
     var winner = 0
     for (var i = 0; i < openSet.length; i++) {
       if (openSet[i].f < openSet[winner].f) {
@@ -107,7 +106,10 @@ function draw() {
       }
     }
     var current = openSet[winner]
-
+    if (current === end) {
+      stop = true
+    }
+    
     removeFromArray(openSet,current);
     closedSet.push(current)
 
@@ -130,6 +132,7 @@ function draw() {
         neighbor.h = heuristic(neighbor,end)
         neighbor.f = neighbor.g + neighbor.h
         neighbor.previous = current
+        
       }
     }
 
