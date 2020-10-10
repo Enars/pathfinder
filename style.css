@@ -37,21 +37,21 @@ main {
       border-bottom: var(--cell-border);
     }
 
-  .spot {
+  .open {
     border-left: var(--cell-border);
     width: var(--cell-length);
     height: var(--cell-length);
   }
-    .spot:last-child {
+    .open:last-child {
       border-right: var(--cell-border);
     }
-  .wall {
+  .closed {
     border-left: var(--cell-border);
     width: var(--cell-length);
     height: var(--cell-length);
     background-color: black;
   }
-    .wall:last-child {
+    .closed:last-child {
       border-right: var(--cell-border);
     }
 

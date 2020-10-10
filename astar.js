@@ -1,4 +1,4 @@
-import {Spot, Wall} from "./spot.js"
+import {Open, Closed} from "./spot.js"
 import Row from "./row.js"
 
 const cols = 15
@@ -53,8 +53,8 @@ function loop() {
     }
 }
 
-function heuristic(spotA, spotB) {
-  const d = Math.abs(spotA.x - spotB.x) + Math.abs(spotA.y - spotB.y)
+function heuristic(cellA, cellB) {
+  const d = Math.abs(cellA.x - cellB.x) + Math.abs(cellA.y - cellB.y)
   return d
 } 
 
@@ -80,9 +80,9 @@ export function setup() {
   for (var x = 0; x < cols; x++) {
     for (var y = 0; y < rows; y++) {
       if (Math.random() > walls) 
-        grid[x][y] = new Spot(x,y);
+        grid[x][y] = new Open(x,y);
       else 
-        grid[x][y] = new Wall(x, y)
+        grid[x][y] = new Closed(x, y)
       grid[x][y].draw()
     }
   }

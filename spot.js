@@ -4,24 +4,26 @@ export class Cell {
     this.y = y
   }
   addNeighbors() {}
+
   draw() {
-    const cellType = this instanceof Spot ? Spot : Wall
+    const cellType = this instanceof Open ? 'open' : 'closed'
     const el = document.createElement('div')
-    console.log(`${objectType}`)
-    el.setAttribute('id', `${objectType}-${this.x}-${this.y}`)
-    el.setAttribute('class', 'spot')
+    el.setAttribute('id', `${cellType}-${this.x}-${this.y}`)
+    el.setAttribute('class', cellType)
     document.getElementById(`row-${this.x}`).appendChild(el)
   }
+
   color() {}
 }
 
-export class Wall extends Cell {
+export class Closed extends Cell {
   constructor(x, y) {
     super(x, y)
   }
+  addNeighbors() {}
 }
 
-export class Spot extends Cell {
+export class Open extends Cell {
   constructor(x, y) {
     super(x, y)
     this.f = 0
@@ -60,7 +62,7 @@ export class Spot extends Cell {
   }
 
   color(color) {
-    const cell = document.getElementById(`spot-${this.x}-${this.y}`)
+    const cell = document.getElementById(`open-${this.x}-${this.y}`)
     cell.style.backgroundColor = color
   }
 }
