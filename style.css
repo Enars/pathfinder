@@ -37,12 +37,21 @@ main {
       border-bottom: var(--cell-border);
     }
 
-  .cell {
+  .spot {
     border-left: var(--cell-border);
     width: var(--cell-length);
     height: var(--cell-length);
   }
-    .cell:last-child {
+    .spot:last-child {
+      border-right: var(--cell-border);
+    }
+  .wall {
+    border-left: var(--cell-border);
+    width: var(--cell-length);
+    height: var(--cell-length);
+    background-color: black;
+  }
+    .wall:last-child {
       border-right: var(--cell-border);
     }
 

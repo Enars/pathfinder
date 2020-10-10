@@ -1,10 +1,11 @@
-import Spot from "./spot.js"
+import {Spot, Wall} from "./spot.js"
 import Row from "./row.js"
 
 const cols = 15
 const rows = 15
 const grid = new Array(cols)
 const diagonals = true
+const walls = 0.3
 
 let openSet = []
 let closedSet = []
@@ -15,7 +16,7 @@ let path = []
 let requestId
 let stop = false
 let frameCount = 0
-const fps = 5
+const fps = 15
 let startTime, now, then, elapsed, fpsInterval
 
 
@@ -78,7 +79,10 @@ export function setup() {
 
   for (var x = 0; x < cols; x++) {
     for (var y = 0; y < rows; y++) {
-      grid[x][y] = new Spot(x,y);
+      if (Math.random() > walls) 
+        grid[x][y] = new Spot(x,y);
+      else 
+        grid[x][y] = new Wall(x, y)
       grid[x][y].draw()
     }
   }
