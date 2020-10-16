@@ -15,8 +15,8 @@ let path = []
 
 let requestId
 let stop = false
-let frameCount = 0
-const fps = 100
+//let frameCount = 0
+const fps = 15
 let startTime, now, then, elapsed, fpsInterval
 
 
@@ -93,7 +93,7 @@ export function setup() {
     }
   }
 
-  start = grid[0][0]
+  start = grid[0][0] 
   end = grid[cols - 1][rows - 1]
 
   openSet.push(start);

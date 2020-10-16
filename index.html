@@ -2,19 +2,27 @@
 <html>
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Pathfinder A*</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <script type="module" src="app.js"></script>
     <main>
-      <div id="container">
         <div id="board"></div>
         <div id="action-bar">
           <input type="button" value="Start" id="start">
+          <div id="settings">
+            <label for="fps-input">Fps</label>
+            <label for="x-size-input">X cells</label>
+            <label for="y-size-input">Y cells</label>
+            <label for="diagonals-checkbox">Diagonals</label>
+            <input type="number" value="15" id="fps-input" size="2">
+            <input type="number" value="15" id="x-size-input" size="2">
+            <input type="number" value="15" id="y-size-input" size="2">
+            <input type="checkbox" value="Diagonals" id="diagonals-checkbox">
+          </div>
         </div>
-      </div>
-      
     </main>
   </body>
   </html>
