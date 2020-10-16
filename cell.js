@@ -1,7 +1,7 @@
 /**
  * Cell parent class of Open (passable), Closed (impassable), location x, y
  */
-export class Cell {
+class Cell {
   constructor(x, y) {
     this.x = x
     this.y = y
@@ -11,7 +11,7 @@ export class Cell {
   draw() {
     const cellType = this instanceof Open ? 'open' : 'closed'
     const el = document.createElement('div')
-    el.setAttribute('id', `${cellType}-${this.x}-${this.y}`)
+    el.setAttribute('id', `cell-${this.x}-${this.y}`)
     el.setAttribute('class', cellType)
     document.getElementById(`row-${this.x}`).appendChild(el)
   }
@@ -62,7 +62,7 @@ export class Open extends Cell {
   }
 
   color(color) {
-    const cell = document.getElementById(`open-${this.x}-${this.y}`)
+    const cell = document.getElementById(`cell-${this.x}-${this.y}`)
     cell.style.backgroundColor = color
   }
 }

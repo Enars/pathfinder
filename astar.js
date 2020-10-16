@@ -70,6 +70,7 @@ function removeFromArray(arr, elt) {
 export function setup() {
   console.log('A*')
 
+
   // Making a multidimensional array
   for (let x = 0; x < cols; x++) {
     grid[x] = new Row(x)
@@ -96,6 +97,9 @@ export function setup() {
   start = grid[0][0] 
   end = grid[cols - 1][rows - 1]
 
+  stop = false
+  closedSet = []
+  openSet = []
   openSet.push(start);
 }
 
