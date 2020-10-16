@@ -1,10 +1,13 @@
+/**
+ * Cell parent class of Open (passable), Closed (impassable), location x, y
+ */
 export class Cell {
   constructor(x, y) {
     this.x = x
     this.y = y
+    this.neighbors = []
   }
   addNeighbors() {}
-
   draw() {
     const cellType = this instanceof Open ? 'open' : 'closed'
     const el = document.createElement('div')
@@ -12,15 +15,13 @@ export class Cell {
     el.setAttribute('class', cellType)
     document.getElementById(`row-${this.x}`).appendChild(el)
   }
-
   color() {}
-}
+} 
 
 export class Closed extends Cell {
   constructor(x, y) {
     super(x, y)
   }
-  addNeighbors() {}
 }
 
 export class Open extends Cell {
@@ -29,7 +30,6 @@ export class Open extends Cell {
     this.f = 0
     this.g = 0
     this.h = 0
-    this.neighbors = []
   }
 
   addNeighbors(grid, cols, rows, diagonals) {

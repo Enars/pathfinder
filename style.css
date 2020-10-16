@@ -1,5 +1,5 @@
 :root {
-  --cell-border: solid 1px black;
+  --cell-border: solid 0.5px black;
   --cell-length: 20px;
 }
   

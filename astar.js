@@ -1,4 +1,4 @@
-import {Open, Closed} from "./spot.js"
+import {Open, Closed} from "./cell.js"
 import Row from "./row.js"
 
 const cols = 15
@@ -16,7 +16,7 @@ let path = []
 let requestId
 let stop = false
 let frameCount = 0
-const fps = 15
+const fps = 100
 let startTime, now, then, elapsed, fpsInterval
 
 
@@ -59,7 +59,7 @@ function heuristic(cellA, cellB) {
 } 
 
 function removeFromArray(arr, elt) {
-  for (var i = arr.length - 1; i >=0; i--) {
+  for (let i = arr.length - 1; i >=0; i--) {
     if (arr[i] == elt) {
       arr.splice(i, 1)
     }
@@ -71,14 +71,14 @@ export function setup() {
   console.log('A*')
 
   // Making a multidimensional array
-  for (var x = 0; x < cols; x++) {
+  for (let x = 0; x < cols; x++) {
     grid[x] = new Row(x)
     grid[x].draw()
   }
 
 
-  for (var x = 0; x < cols; x++) {
-    for (var y = 0; y < rows; y++) {
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
       if (Math.random() > walls) 
         grid[x][y] = new Open(x,y);
       else 
@@ -87,8 +87,8 @@ export function setup() {
     }
   }
   
-  for (var x = 0; x < cols; x++) {
-    for (var y = 0; y < rows; y++) {
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
       grid[x][y].addNeighbors(grid, cols, rows, diagonals)
     }
   }
@@ -103,13 +103,13 @@ export function setup() {
 function draw() {
   // Work
 
-    var winner = 0
-    for (var i = 0; i < openSet.length; i++) {
+    let winner = 0
+    for (let i = 0; i < openSet.length; i++) {
       if (openSet[i].f < openSet[winner].f) {
         winner = i
       }
     }
-    var current = openSet[winner]
+    let current = openSet[winner]
     if (current === end) {
       stop = true
     }
@@ -117,43 +117,46 @@ function draw() {
     removeFromArray(openSet,current);
     closedSet.push(current)
 
-    var neighbors = current.neighbors
-    for (var i=0; i< neighbors.length;i++) {
-      var neighbor = neighbors[i]
+    let neighbors = current.neighbors
+    for (let i=0; i< neighbors.length;i++) {
+      let neighbor = neighbors[i]
 
       if (!closedSet.includes(neighbor)) {
-        var tempG = current.g + 1
+        const tempG = current.g + 1
 
+        let improvement = false
         if (openSet.includes(neighbor)) {
           if (tempG < neighbor.g) {
             neighbor.g = tempG
+            improvement = true
           }
         } else {
           neighbor.g = tempG
           openSet.push(neighbor)
+          improvement = true
         }
-
-        neighbor.h = heuristic(neighbor,end)
-        neighbor.f = neighbor.g + neighbor.h
-        neighbor.previous = current
-        
+        if (improvement) {
+          neighbor.h = heuristic(neighbor,end)
+          neighbor.f = neighbor.g + neighbor.h
+          neighbor.previous = current
+        }
       }
     }
 
     //todo: no solution
 
   // Draw
-  for (var i = 0; i < cols; i++) {
-    for (var j = 0; j < rows; j++) {
+  for (let i = 0; i < cols; i++) {
+    for (let j = 0; j < rows; j++) {
       grid[i][j].color('white')
     }  
   }
 
-  for (var i = 0; i < closedSet.length; i++) {
+  for (let i = 0; i < closedSet.length; i++) {
     closedSet[i].color('red')
   }
   
-  for (var i = 0; i < openSet.length; i++) {
+  for (let i = 0; i < openSet.length; i++) {
     openSet[i].color('green')
   }
 
@@ -165,7 +168,7 @@ function draw() {
     temp = temp.previous
   }
 
-  for (var i = 0; i < path.length; i++) {
+  for (let i = 0; i < path.length; i++) {
     path[i].color('blue')
   }
 }
