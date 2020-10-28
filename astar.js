@@ -16,26 +16,37 @@ let path = []
 let requestId
 let stop = false
 //let frameCount = 0
-const fps = 15
+let changeFps = false
+let fps
 let startTime, now, then, elapsed, fpsInterval
 
 
-// initialize the timer variables and start the animation
+export function update(newfps) {
+  fps = newfps
+  changeFps = true
+  console.log("fps changed to: " + fps)
+}
 
-export function startAnimating() {
+// initialize the timer variables and start the animation
+export function animate(fps) {
   fpsInterval = 1000 / fps
   then = Date.now()
   startTime = then
+  changeFps = false
   loop()
 }
 
 function loop() {
-
     // calc elapsed time since last loop
     requestId = requestAnimationFrame(loop)
     //console.log(frameCount++)
     now = Date.now()
     elapsed = now - then
+
+    if (changeFps) {
+      window.cancelAnimationFrame(requestId);
+      animate(fps)
+    }
 
     // if enough time has elapsed, draw the next frame
 
@@ -54,7 +65,11 @@ function loop() {
 }
 
 function heuristic(cellA, cellB) {
+  // Manhattan distance
   const d = Math.abs(cellA.x - cellB.x) + Math.abs(cellA.y - cellB.y)
+  // Straight line
+  //const d = Math.sqrt(Math.pow(((cellA.x - cellB.x), 2)) + Math.pow((cellA.y - cellB.y), 2))
+  
   return d
 } 
 
@@ -69,6 +84,10 @@ function removeFromArray(arr, elt) {
 // Setup grid, instantiate cells, count neighbors, set start and end, put start in openSet
 export function setup() {
   console.log('A*')
+  openSet = []
+  closedSet = []
+  path = []
+  stop = false
 
   // Making a multidimensional array
   for (let x = 0; x < cols; x++) {
@@ -153,11 +172,11 @@ function draw() {
   }
 
   for (let i = 0; i < closedSet.length; i++) {
-    closedSet[i].color('red')
+    closedSet[i].color('purple')
   }
   
   for (let i = 0; i < openSet.length; i++) {
-    openSet[i].color('green')
+    openSet[i].color('lightblue')
   }
 
   path = []
