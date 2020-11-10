@@ -1,15 +1,13 @@
-import { startAnimating, setup } from "./astar.js"
+import { setup, animate, update } from "./astar.js"
 
 window.onload = () => {
-    const initSettings = JSON.parse(window.localStorage.getItem('settings'))
-    //? JSON.parse(window.localStorage.getItem('settings')) : {
-  //   fps: 15,
-  //   x: 15,
-  //   y: 15,
-  //   diagonals: true
-  // }
-  let settings = initSettings
-  setup()
+  let state = {
+    fps: 15,
+    x: 15,
+    y: 15,
+    diagonals: true
+  }
+  
   const start = document.getElementById('start')
   const fpsIn = document.getElementById('fps-input')
   const xSizeIn = document.getElementById('x-size-input')
@@ -17,48 +15,44 @@ window.onload = () => {
   const diagonalsIn = document.getElementById('diagonals-checkbox')
   const board = document.getElementById('board')
   
-  start.addEventListener('click', () => startAnimating())
+  start.addEventListener('click', () => {
+    animate(state.fps)
+  })
+
+  fpsIn.addEventListener('change', (e) => {
+    const val = e.target.value
+    if (val < 1)
+      fpsIn.value = 0.5
+    if (val > 99)
+      fpsIn.value = 99
+    state.fps = fpsIn.value
+    update(state.fps)
+  })
 
   xSizeIn.addEventListener('change', (e) => {
     const val = e.target.value
     if (val < 3)
       xSizeIn.value = 3
-    if (val > 99) 
+    if (val > 99)
       xSizeIn.value = 99
-
-    settings.x = val 
-    updateBoard()
+    state.x = xSizeIn.value
+    updateBoard(state)
   })
 
   ySizeIn.addEventListener('change', (e) => {
     const val = e.target.value
     if (val < 3)
       ySizeIn.value = 3
-    if (val > 99) 
+    if (val > 99)
       ySizeIn.value = 99
-
-    settings.y = val 
-    updateBoard()
+    state.y = ySizeIn.value
+    updateBoard(state)
   })
-  
-  fpsIn.addEventListener('change', (e) => {
-    const val = e.target.value
-    if (val < 1)
-      ySizeIn.value = 1
-    if (val > 99) 
-      ySizeIn.value = 99
-
-    settings.fps = val 
-    updateBoard()
-  })
-
-  function updateBoard() {
-    //Save settings
-    window.localStorage.setItem('settings',  JSON.stringify(settings))
-    // console.log(JSON.parse(window.localStorage.getItem('settings')))
-    //Clear board
-    board.innerHTML = ''
-    //Create new board
-    setup(settings)
-  }
+  updateBoard(state)
 }
+
+function updateBoard(state) {
+  document.getElementById('board').innerHTML = ''
+  setup()
+}
+
