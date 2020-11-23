@@ -25,10 +25,3 @@ export let neighborSquares = (x, y) => {
     [x-1, y+1], [x, y+1], [x+1, y+1]
   ] 
 }
-
-// export function inBoundsAndOpenCell(x, y, rows, cols, grid) {
-//   if (x > 0 && y > 0)
-//     if (x < rows - 1 && y < cols - 1)
-//       if (grid[x][y] instanceof Open)
-//         return true
-// }

@@ -62,7 +62,7 @@ main {
   display: flex;
   margin: 10px 0 10px 0;
 }    
-  input[type=button], input[type=number], input[checkbox] {
+  input[type=button], input[type=range], input[checkbox] {
     box-sizing: border-box;
     padding: 15px;
     border-radius: 10px;
@@ -79,10 +79,10 @@ main {
     text-align: center;
     margin-left: 5px;
     display: grid;
-    grid-template-columns: repeat(4, auto);
+    grid-template-columns: repeat(2, auto);
   }
     #settings input {
-      padding: 10px 15px;
+      padding: 5px 15px;
       margin-right: 5px;
     }
     #settings label {

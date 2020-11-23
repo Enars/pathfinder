@@ -33,7 +33,6 @@ export class Open extends Cell {
     this.h = 0
   }
 
-
   addNeighbors(x, y, grid, cols, rows) {
     let allNeighbors = neighborSquares(x, y)
     
