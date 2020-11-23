@@ -2,7 +2,7 @@ import { setup, animate, update } from "./astar.js"
 
 window.onload = () => {
   let state = {
-    fps: 15,
+    fps: 10,
     x: 15,
     y: 15,
     diagonals: true

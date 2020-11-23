@@ -1,10 +1,10 @@
 import {Open, Closed} from "./cell.js"
+import {removeFromArray, manhattanDist} from "./helpers.js"
 import Row from "./row.js"
 
 const cols = 15
 const rows = 15
 const grid = new Array(cols)
-const diagonals = true
 const walls = 0.3
 
 let openSet = []
@@ -17,7 +17,7 @@ let requestId
 let stop = false
 //let frameCount = 0
 let changeFps = false
-let fps
+let fps = 5
 let startTime, now, then, elapsed, fpsInterval
 
 
@@ -64,23 +64,6 @@ function loop() {
     }
 }
 
-function heuristic(cellA, cellB) {
-  // Manhattan distance
-  const d = Math.abs(cellA.x - cellB.x) + Math.abs(cellA.y - cellB.y)
-  // Straight line
-  //const d = Math.sqrt(Math.pow(((cellA.x - cellB.x), 2)) + Math.pow((cellA.y - cellB.y), 2))
-  
-  return d
-} 
-
-function removeFromArray(arr, elt) {
-  for (let i = arr.length - 1; i >=0; i--) {
-    if (arr[i] == elt) {
-      arr.splice(i, 1)
-    }
-  }
-}
-
 // Setup grid, instantiate cells, count neighbors, set start and end, put start in openSet
 export function setup() {
   console.log('A*')
@@ -99,7 +82,7 @@ export function setup() {
 
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
-      if (Math.random() > walls) 
+      if (Math.random() > walls || x == 0 && y == 0 || x == cols - 1 && y == rows - 1) 
         grid[x][y] = new Open(x,y);
       else 
         grid[x][y] = new Closed(x, y)
@@ -109,12 +92,12 @@ export function setup() {
   
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
-      grid[x][y].addNeighbors(grid, cols, rows, diagonals)
+      grid[x][y].addNeighbors(x, y, grid, cols, rows)
     }
   }
 
   start = grid[0][0] 
-  end = grid[cols - 1][rows - 1]
+  end = grid[cols - 1][rows - 1] 
 
   stop = false
   closedSet = []
@@ -159,7 +142,7 @@ function draw() {
           improvement = true
         }
         if (improvement) {
-          neighbor.h = heuristic(neighbor,end)
+          neighbor.h = manhattanDist(neighbor,end)
           neighbor.f = neighbor.g + neighbor.h
           neighbor.previous = current
         }

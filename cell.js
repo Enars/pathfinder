@@ -1,3 +1,4 @@
+import { neighborSquares } from './helpers.js'
 /**
  * Cell parent class of Open (passable), Closed (impassable), location x, y
  */
@@ -32,32 +33,23 @@ export class Open extends Cell {
     this.h = 0
   }
 
-  addNeighbors(grid, cols, rows, diagonals) {
-    if (this.x < cols - 1) {
-      this.neighbors.push(grid[this.x+1][this.y])
-    }
-    if (this.x > 0) {
-      this.neighbors.push(grid[this.x-1][this.y])
-    }
-    if (this.y < rows - 1) {
-      this.neighbors.push(grid[this.x][this.y+1])
-    }
-    if (this.y > 0) {
-    this.neighbors.push(grid[this.x][this.y-1])
-    }
-    if (diagonals) {
-      if (this.x < cols - 1 && this.y < rows - 1) {
-        this.neighbors.push(grid[this.x + 1][this.y + 1])
-      }
-      if (this.x > 0 && this.y < rows - 1) {
-        this.neighbors.push(grid[this.x - 1][this.y + 1])
-      }
-      if (this.x < cols - 1 && this.y > 0)
-        this.neighbors.push(grid[this.x + 1][this.y - 1])
-  
-      if (this.x > 0 && this.y > 0) {
-        this.neighbors.push(grid[this.x - 1][this.y - 1])
-      }
+
+  addNeighbors(x, y, grid, cols, rows) {
+    let allNeighbors = neighborSquares(x, y)
+    
+    allNeighbors.forEach(n => {
+      let neighborX = n[0]
+      let neighborY = n[1]
+
+      if (inBoundsAndOpenCell(neighborX, neighborY))
+        this.neighbors.push(grid[neighborX][neighborY])
+    })
+    
+    function inBoundsAndOpenCell(x, y) {
+      if (x >= 0 && y >= 0)
+        if (x < rows && y < cols)
+          if (grid[x][y] instanceof Open)
+            return true
     }
   }
 
