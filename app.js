@@ -3,8 +3,8 @@ import { setup, animate, onUpdateSettings, run } from "./astar.js"
 window.onload = () => {
   let state = {
     fps: 5,
-    x: 15,
-    y: 15,
+    rows: 15,
+    cols: 15,
     diagonals: true
   }
   
@@ -29,11 +29,12 @@ window.onload = () => {
 
   sizeIn.addEventListener('change', (e) => {
     const val = e.target.value
-    if (val < 3)
-      sizeIn.value = 3
-    if (val > 99)
-      sizeIn.value = 99
-    state.x = sizeIn.value
+    // if (val < 3)
+    //   sizeIn.value = 3
+    // if (val > 99)
+    //   sizeIn.value = 99
+    state.rows = sizeIn.value
+    state.cols = sizeIn.value
     updateBoard(state)
   })
 
@@ -43,6 +44,6 @@ window.onload = () => {
 
 function updateBoard(state) {
   document.getElementById('board').innerHTML = ''
-  setup()
+  setup(state)
 }
 

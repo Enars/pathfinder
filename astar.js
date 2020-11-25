@@ -2,9 +2,9 @@ import {Open, Closed} from "./cell.js"
 import {removeFromArray, manhattanDist} from "./helpers.js"
 import Row from "./row.js"
 
-const cols = 15
-const rows = 15
-const grid = new Array(cols)
+let cols 
+let rows
+let grid
 const walls = 0.3
 
 let openSet = []
@@ -80,9 +80,12 @@ export function run() {
 }
 
 // Setup grid, instantiate cells, count neighbors, set start and end, put start in openSet
-export function setup() {
+export function setup(state) {
   console.log('Setup')
   stop = true
+  cols = state.cols
+  rows = state.rows
+  grid = new Array(cols)
 
   // Making a multidimensional array
   for (let x = 0; x < cols; x++) {
