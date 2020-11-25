@@ -1,4 +1,4 @@
-import { setup, animate, update } from "./astar.js"
+import { setup, animate, onUpdateSettings, run } from "./astar.js"
 
 window.onload = () => {
   let state = {
@@ -9,13 +9,13 @@ window.onload = () => {
   }
   
   const start = document.getElementById('start')
+  const update = document.getElementById('update')
   const fpsIn = document.getElementById('fps-input')
   const sizeIn = document.getElementById('size-input')
   const board = document.getElementById('board')
   
-  start.addEventListener('click', () => {
-    animate(state.fps)
-  })
+  start.addEventListener('click', () => run())
+  update.addEventListener('click', () => updateBoard(state))
 
   fpsIn.addEventListener('change', (e) => {
     const val = e.target.value
@@ -24,7 +24,7 @@ window.onload = () => {
     // if (val > 99)
     //   fpsIn.value = 15
     state.fps = fpsIn.value
-    update(state.fps)
+    onUpdateSettings(state)
   })
 
   sizeIn.addEventListener('change', (e) => {
@@ -39,6 +39,7 @@ window.onload = () => {
 
   updateBoard(state)
 }
+
 
 function updateBoard(state) {
   document.getElementById('board').innerHTML = ''

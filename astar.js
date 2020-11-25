@@ -21,8 +21,8 @@ let fps = 5
 let startTime, now, then, elapsed, fpsInterval
 
 
-export function update(newfps) {
-  fps = newfps
+export function onUpdateSettings(state) {
+  fps = state.fps
   changeFps = true
   console.log("fps changed to: " + fps)
 }
@@ -64,21 +64,31 @@ function loop() {
     }
 }
 
+export function run() {
+  console.log('A*')
+
+  start = grid[0][0] 
+  end = grid[cols - 1][rows - 1] 
+
+  stop = false
+  path = []
+  closedSet = []
+  openSet = []
+  openSet.push(start);
+
+  animate(fps)
+}
+
 // Setup grid, instantiate cells, count neighbors, set start and end, put start in openSet
 export function setup() {
-  console.log('A*')
-  openSet = []
-  closedSet = []
-  path = []
-  stop = false
-
+  console.log('Setup')
+  stop = true
 
   // Making a multidimensional array
   for (let x = 0; x < cols; x++) {
     grid[x] = new Row(x)
     grid[x].draw()
   }
-
 
   for (let x = 0; x < cols; x++) {
     for (let y = 0; y < rows; y++) {
@@ -95,14 +105,6 @@ export function setup() {
       grid[x][y].addNeighbors(x, y, grid, cols, rows)
     }
   }
-
-  start = grid[0][0] 
-  end = grid[cols - 1][rows - 1] 
-
-  stop = false
-  closedSet = []
-  openSet = []
-  openSet.push(start);
 }
 
 // Draw and work algorithm
@@ -148,8 +150,6 @@ function draw() {
         }
       }
     }
-
-    //todo: no solution
 
   // Draw
   for (let i = 0; i < cols; i++) {
