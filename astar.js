@@ -1,5 +1,5 @@
-import {Open, Closed} from "./cell.js"
-import {removeFromArray, manhattanDist} from "./helpers.js"
+import { Open, Closed } from "./cell.js"
+import { removeFromArray, manhattanDist } from "./helpers.js"
 import Row from "./row.js"
 
 let cols 
@@ -65,7 +65,7 @@ function loop() {
 }
 
 export function run() {
-  console.log('A*')
+  console.log(grid)
 
   start = grid[0][0] 
   end = grid[cols - 1][rows - 1] 
@@ -77,6 +77,36 @@ export function run() {
   openSet.push(start);
 
   animate(fps)
+}
+
+export function processNeighbors() {
+  for (let x = 0; x < cols; x++) {
+    for (let y = 0; y < rows; y++) {
+      grid[x][y].addNeighbors(x, y, grid, cols, rows)
+    }
+  }
+}
+
+export function toggleOpenClosed(cell) {
+  let isOpen = cell instanceof Open
+  const x = cell.x
+  const y = cell.y
+  const row = document.getElementById(`row-${cell.x}`)
+  
+  
+  delete grid[x][y]
+
+  if (isOpen) {
+    grid[x][y] = new Closed(x,y);
+    grid[x][y].neighbors = []
+    console.log('closed')
+  } else {
+    console.log('opened')
+    grid[x][y] = new Open(x,y);
+  }
+ 
+
+  processNeighbors()
 }
 
 // Setup grid, instantiate cells, count neighbors, set start and end, put start in openSet
@@ -102,18 +132,13 @@ export function setup(state) {
       grid[x][y].draw()
     }
   }
-  
-  for (let x = 0; x < cols; x++) {
-    for (let y = 0; y < rows; y++) {
-      grid[x][y].addNeighbors(x, y, grid, cols, rows)
-    }
-  }
+  console.log(grid)
+  processNeighbors()
 }
 
 // Draw and work algorithm
 function draw() {
   // Work
-
     let winner = 0
     for (let i = 0; i < openSet.length; i++) {
       if (openSet[i].f < openSet[winner].f) {
@@ -124,8 +149,9 @@ function draw() {
     if (current === end) {
       stop = true
     }
+    console.log(current)
     
-    removeFromArray(openSet,current);
+    removeFromArray(openSet, current);
     closedSet.push(current)
 
     let neighbors = current.neighbors

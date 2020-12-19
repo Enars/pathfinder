@@ -1,11 +1,10 @@
-import { setup, animate, onUpdateSettings, run } from "./astar.js"
+import { setup, animate, onUpdateSettings, run, toggleOpenClosed } from "./astar.js"
 
 window.onload = () => {
   let state = {
     fps: 5,
     rows: 15,
-    cols: 15,
-    diagonals: true
+    cols: 15
   }
   
   const start = document.getElementById('start')
@@ -17,7 +16,7 @@ window.onload = () => {
   start.addEventListener('click', () => run())
   update.addEventListener('click', () => updateBoard(state))
 
-  fpsIn.addEventListener('change', (e) => {
+  fpsIn.addEventListener('drag', (e) => {
     const val = e.target.value
     // if (val < 1)
     //   fpsIn.value = 0.5
@@ -37,6 +36,11 @@ window.onload = () => {
     state.cols = sizeIn.value
     updateBoard(state)
   })
+
+  function handleCellClick() {
+    
+
+  } 
 
   updateBoard(state)
 }
