@@ -16,12 +16,12 @@ window.onload = () => {
   start.addEventListener('click', () => run())
   update.addEventListener('click', () => updateBoard(state))
 
-  fpsIn.addEventListener('drag', (e) => {
+  fpsIn.addEventListener('change', (e) => {
     const val = e.target.value
-    // if (val < 1)
-    //   fpsIn.value = 0.5
-    // if (val > 99)
-    //   fpsIn.value = 15
+    if (val < 1)
+      fpsIn.value = 0.5
+    if (val > 99)
+      fpsIn.value = 15
     state.fps = fpsIn.value
     onUpdateSettings(state)
   })
